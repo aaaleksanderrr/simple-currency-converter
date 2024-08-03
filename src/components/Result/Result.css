@@ -1,0 +1,8 @@
+p {
+  margin: 5px;
+}
+
+.error {
+  color: crimson;
+  font-weight: bold;
+}

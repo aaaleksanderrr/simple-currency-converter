@@ -21,7 +21,12 @@ const ConverterContainer = () => {
       />
 
       {currency && (
-        <FetchCurrency getCurrency={currency} getValue={value} setLoadingState={setLoadingState} />
+        <FetchCurrency
+          getCurrency={currency}
+          getValue={value}
+          setLoadingState={setLoadingState}
+          setErrorMessage={setErrorMessage}
+        />
       )}
 
       <Status getErrorMessage={errorMessage} getLoadingState={loadingState} />

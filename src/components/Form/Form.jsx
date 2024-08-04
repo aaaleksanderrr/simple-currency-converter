@@ -1,49 +1,38 @@
-import { useState } from "react";
-import Result from "../Result/Result";
 import "./Form.css";
 import { useForm } from "react-hook-form";
 
-const Form = () => {
+const Form = ({ setCurrency, setValue, setErrorMessage, setLoadingState }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const [value, setValue] = useState(0);
+  setErrorMessage(errors?.amount?.message);
 
-  let amount, currency, errorMessage;
-
-  errorMessage = errors?.amount?.message;
+  const onSubmit = (data) => {
+    setCurrency(data.currency);
+    setValue(data.amount);
+    setLoadingState(true);
+  };
 
   return (
-    <>
-      <form
-        noValidate
-        className="form"
-        onSubmit={handleSubmit((data) => {
-          amount = data.amount;
-          currency = data.currency;
-          setValue(amount);
+    <form noValidate className="form" onSubmit={handleSubmit(onSubmit)}>
+      <input
+        {...register("amount", {
+          required: "Wpisz kwotę do przeliczenia",
+          min: { value: 0.01, message: "Kwota nie może być mniejsza od 0.01" },
         })}
-      >
-        <input
-          {...register("amount", {
-            required: "Wpisz kwotę do przeliczenia",
-            min: { value: 0.01, message: "Kwota nie może być mniejsza od 0.01" },
-          })}
-          type="number"
-          placeholder="Podaj kwotę"
-        />
-        <select {...register("currency")}>
-          <option value="eur">EUR</option>
-          <option value="usd">USD</option>
-          <option value="chf">CHF</option>
-        </select>
-        <button type="submit">Przelicz na PLN</button>
-      </form>
-      <Result result={value} errors={errorMessage} />
-    </>
+        type="number"
+        placeholder="Podaj kwotę"
+      />
+      <select {...register("currency")}>
+        <option value="eur">EUR</option>
+        <option value="usd">USD</option>
+        <option value="chf">CHF</option>
+      </select>
+      <button type="submit">Przelicz na PLN</button>
+    </form>
   );
 };
 

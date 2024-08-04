@@ -5,7 +5,7 @@ const FetchCurrency = ({ getCurrency, getValue, setLoadingState, setErrorMessage
   const [result, setResult] = useState(0);
 
   useEffect(() => {
-    fetch(`https://api.nbp.pl/api/exchangerates/ratess/a/${getCurrency}`)
+    fetch(`https://api.nbp.pl/api/exchangerates/rates/a/${getCurrency}`)
       .then((res) => res.json())
       .catch((err) => {
         setLoadingState(false);

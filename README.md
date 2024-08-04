@@ -2,7 +2,7 @@
 
 ## Link do Netlify
 
-TO DO
+https://simple-currency-converter-react.netlify.app
 
 ## Wykorzystane technologie
 

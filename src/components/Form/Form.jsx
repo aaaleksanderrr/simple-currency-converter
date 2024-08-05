@@ -1,19 +1,47 @@
 import "./Form.css";
 import { useForm } from "react-hook-form";
 
-const Form = ({ setCurrency, setValue, setErrorMessage, setLoadingState }) => {
+import React from "react";
+
+const Form = ({ setResult, setErrorMessage, setLoadingState }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  let currency, value, result;
+
   setErrorMessage(errors?.amount?.message);
 
   const onSubmit = (data) => {
-    setCurrency(data.currency);
-    setValue(data.amount);
+    currency = data.currency;
+    value = data.amount;
     setLoadingState(true);
+
+    fetch(`http://api.nbp.pl/api/exchangerates/rates/a/${currency}`)
+      .then((res) => res.json())
+      .catch((err) => {
+        setLoadingState(false);
+        setErrorMessage("Wystąpił błąd, spróbuj ponownie później");
+        console.error(err);
+      })
+
+      .then((data) => {
+        const rates = data?.rates?.[0]?.mid;
+
+        if (rates) {
+          result = rates * value;
+          setResult(result.toFixed(2));
+        } else {
+          setLoadingState(false);
+          setErrorMessage("Wystąpił błąd, spróbuj ponownie później");
+        }
+
+        if (result > 0) {
+          setLoadingState(false);
+        }
+      });
   };
 
   return (

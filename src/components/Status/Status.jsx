@@ -1,9 +1,10 @@
 import "./Status.css";
 
-const Status = ({ getErrorMessage, getLoadingState }) => {
+const Status = ({ getResult, getErrorMessage, getLoadingState }) => {
   return (
     <>
-      <p className="error">{getErrorMessage}</p>
+      <p className="message result">{getResult}</p>
+      <p className="message error">{getErrorMessage}</p>
       {getLoadingState && <span className="loading-text"></span>}
     </>
   );

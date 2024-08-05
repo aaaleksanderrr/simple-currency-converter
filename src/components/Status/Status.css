@@ -1,10 +1,16 @@
-p {
+.message {
   margin: 5px;
 }
 
 .error {
   color: crimson;
   font-weight: bold;
+}
+
+.result {
+  color: darkgreen;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
 .loading-text {

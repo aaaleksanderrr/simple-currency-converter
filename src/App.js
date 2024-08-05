@@ -1,12 +1,7 @@
-import "./App.css";
 import ConverterContainer from "./components/ConverterContainer/ConverterContainer";
 
-function App() {
-  return (
-    <div className="App">
-      <ConverterContainer />
-    </div>
-  );
-}
+const App = () => {
+  return <ConverterContainer />;
+};
 
 export default App;

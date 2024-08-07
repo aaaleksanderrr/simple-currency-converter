@@ -10,19 +10,16 @@ const Form = ({ setResult, setErrorMessage, setLoadingState }) => {
     formState: { errors },
   } = useForm();
 
-  let currency, value, result;
-
   setErrorMessage(errors?.amount?.message);
 
   const onSubmit = (data) => {
-    currency = data.currency;
-    value = data.amount;
+    const currency = data.currency;
+    const value = data.amount;
     setLoadingState(true);
 
-    fetch(`http://api.nbp.pl/api/exchangerates/rates/a/${currency}`)
+    fetch(`https://api.nbp.pl/api/exchangerates/rates/a/${currency}`)
       .then((res) => res.json())
       .catch((err) => {
-        setLoadingState(false);
         setErrorMessage("Wystąpił błąd, spróbuj ponownie później");
         console.error(err);
       })
@@ -31,16 +28,15 @@ const Form = ({ setResult, setErrorMessage, setLoadingState }) => {
         const rates = data?.rates?.[0]?.mid;
 
         if (rates) {
-          result = rates * value;
+          const result = rates * value;
           setResult(result.toFixed(2));
         } else {
           setLoadingState(false);
           setErrorMessage("Wystąpił błąd, spróbuj ponownie później");
         }
-
-        if (result > 0) {
-          setLoadingState(false);
-        }
+      })
+      .finally(() => {
+        setLoadingState(false);
       });
   };
 

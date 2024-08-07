@@ -31,7 +31,6 @@ const Form = ({ setResult, setErrorMessage, setLoadingState }) => {
           const result = rates * value;
           setResult(result.toFixed(2));
         } else {
-          setLoadingState(false);
           setErrorMessage("Wystąpił błąd, spróbuj ponownie później");
         }
       })
